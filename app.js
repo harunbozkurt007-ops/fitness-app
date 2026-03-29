@@ -1842,6 +1842,11 @@ const SettingsScreen = {
 
     const modalCard = document.getElementById('modal-card');
     const inputId = 'settings-edit-input';
+
+    // FIX: Önceki oturumdan kalan input varsa temizle (birikme hatası)
+    const prevInput = document.getElementById(inputId);
+    if (prevInput) prevInput.remove();
+
     const inputEl = document.createElement('input');
     inputEl.type  = type || 'text';
     inputEl.id    = inputId;
