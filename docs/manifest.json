@@ -1,0 +1,42 @@
+{
+  "name": "FitTrack — Antrenman Takibi",
+  "short_name": "FitTrack",
+  "description": "iPhone için offline çalışan fitness ve antrenman takip uygulaması",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1C1C1E",
+  "background_color": "#1C1C1E",
+  "lang": "tr",
+  "categories": ["health", "fitness", "sports"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%231C1C1E'/><text x='96' y='130' font-size='100' text-anchor='middle'>💪</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%231C1C1E'/><text x='256' y='340' font-size='260' text-anchor='middle'>💪</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Bugün",
+      "short_name": "Bugün",
+      "description": "Bugünün antrenmanını başlat",
+      "url": "./index.html#home",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='20' font-size='20'>🏠</text></svg>", "sizes": "96x96" }]
+    },
+    {
+      "name": "Antrenmanlar",
+      "short_name": "Antrenman",
+      "description": "Antrenman listesi",
+      "url": "./index.html#workouts"
+    }
+  ]
+}
