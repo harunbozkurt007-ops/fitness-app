@@ -3,21 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#1C1C1E">
-
-  <!-- iOS PWA -->
+  <meta name="theme-color" content="#0B1120">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="FitTrack">
-
-  <!-- iOS Icons -->
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
-
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
-
-  <title>FitTrack — Antrenman Takibi</title>
+  <title>FitTrack</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,7 +20,7 @@
   <!-- Toast -->
   <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- Modal Overlay -->
+  <!-- Modal -->
   <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
     <div class="modal-card" id="modal-card">
       <h3 class="modal-title" id="modal-title"></h3>
@@ -34,66 +29,77 @@
     </div>
   </div>
 
+  <!-- Quick Log Overlay -->
+  <div id="quick-log-overlay" class="fullscreen-overlay hidden">
+    <div class="overlay-header">
+      <button class="btn-icon" id="qlog-close">✕</button>
+      <h2 id="qlog-title">Egzersiz Ekle</h2>
+      <span style="width:36px;"></span>
+    </div>
+    <div class="qlog-tabs">
+      <button class="qlog-tab active" data-tab="search">🔍 Ara</button>
+      <button class="qlog-tab" data-tab="body">💪 Kas Seç</button>
+      <button class="qlog-tab" data-tab="recent">⏱ Son</button>
+    </div>
+    <div id="qlog-tab-content" class="qlog-tab-content"></div>
+  </div>
+
+  <!-- Set Entry Overlay -->
+  <div id="set-entry-overlay" class="fullscreen-overlay hidden">
+    <div class="overlay-header">
+      <button class="btn-icon" id="setentry-back">←</button>
+      <h2 id="setentry-title"></h2>
+      <span style="width:36px;"></span>
+    </div>
+    <div id="setentry-content" class="setentry-content"></div>
+  </div>
+
   <!-- Rest Timer Overlay -->
   <div id="rest-overlay" class="rest-overlay hidden" role="dialog" aria-modal="true">
     <div class="rest-card">
-      <p class="rest-label">Dinlenme Süresi</p>
+      <p class="rest-label">Dinlenme</p>
       <div class="rest-timer-wrap">
         <svg class="rest-ring" viewBox="0 0 120 120">
           <circle class="rest-ring-bg" cx="60" cy="60" r="52"/>
           <circle class="rest-ring-fg" id="rest-ring-fg" cx="60" cy="60" r="52"/>
         </svg>
-        <span class="rest-countdown" id="rest-countdown">60</span>
+        <span class="rest-countdown" id="rest-countdown">90</span>
       </div>
       <div class="rest-presets">
         <button class="preset-btn" data-sec="30">30s</button>
-        <button class="preset-btn" data-sec="60">60s</button>
+        <button class="preset-btn" data-sec="60">1dk</button>
         <button class="preset-btn active" data-sec="90">90s</button>
         <button class="preset-btn" data-sec="120">2dk</button>
         <button class="preset-btn" data-sec="180">3dk</button>
       </div>
       <div class="rest-actions">
         <button class="btn btn-ghost" id="rest-skip-btn">Atla</button>
-        <button class="btn btn-primary" id="rest-add30-btn">+30s</button>
+        <button class="btn btn-gold" id="rest-add30-btn">+30s</button>
       </div>
     </div>
   </div>
 
-  <!-- Exercise Picker Overlay -->
-  <div id="exercise-picker-overlay" class="fullscreen-overlay hidden">
-    <div class="overlay-header">
-      <button class="btn-icon" id="exercise-picker-close">✕</button>
-      <h2>Egzersiz Seç</h2>
-      <span></span>
-    </div>
-    <div class="overlay-search">
-      <input type="search" id="picker-search" class="search-input" placeholder="Egzersiz ara…">
-    </div>
-    <div class="category-chips" id="picker-category-chips"></div>
-    <div class="overlay-list" id="picker-exercise-list"></div>
-  </div>
-
   <!-- App Shell -->
   <div id="app">
-    <!-- Header -->
     <header class="app-header" id="app-header">
       <button class="btn-icon header-back hidden" id="header-back">←</button>
       <h1 class="header-title" id="header-title">FitTrack</h1>
       <div class="header-actions" id="header-actions"></div>
     </header>
 
-    <!-- Main Content -->
     <main id="main-content" class="main-content"></main>
 
-    <!-- Tab Bar -->
     <nav class="tab-bar" id="tab-bar" role="tablist">
       <button class="tab-btn active" data-route="home" role="tab" aria-selected="true">
         <span class="tab-icon">🏠</span>
         <span class="tab-label">Bugün</span>
       </button>
-      <button class="tab-btn" data-route="workouts" role="tab" aria-selected="false">
-        <span class="tab-icon">💪</span>
-        <span class="tab-label">Antrenmanlar</span>
+      <button class="tab-btn" data-route="history" role="tab" aria-selected="false">
+        <span class="tab-icon">📅</span>
+        <span class="tab-label">Geçmiş</span>
+      </button>
+      <button class="tab-btn tab-btn-add" id="tab-add-btn" role="tab">
+        <span class="tab-add-icon">＋</span>
       </button>
       <button class="tab-btn" data-route="progress" role="tab" aria-selected="false">
         <span class="tab-icon">📊</span>
@@ -108,16 +114,12 @@
 
   <script src="exercises.js"></script>
   <script src="app.js"></script>
-
   <script>
-    // Service Worker kaydı
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').then(reg => {
-          console.log('[SW] Kayıt başarılı:', reg.scope);
-        }).catch(err => {
-          console.warn('[SW] Kayıt hatası:', err);
-        });
+        navigator.serviceWorker.register('./sw.js')
+          .then(r => console.log('[SW] OK', r.scope))
+          .catch(e => console.warn('[SW] Hata', e));
       });
     }
   </script>
